@@ -28,6 +28,7 @@ public class Main {
   }};
 
   public static void main(String[] args) {
+    //Test git
 
     InServicePlaceInterface inServicePlaceManager = new InServicePlaceImplement();
     SemesterServiceInterface semesterManager = new SemesterServiceImplement();
