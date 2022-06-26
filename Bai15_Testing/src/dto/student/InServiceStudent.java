@@ -1,0 +1,51 @@
+package dto.student;
+
+import com.google.gson.Gson;
+import dto.SemesterResult;
+import java.util.List;
+
+public class InServiceStudent extends BaseStudent {
+
+  private String inServicePlaceId;
+
+  public InServiceStudent(String id, float entryScore, List<SemesterResult> semesterResults, String inServicePlaceId) {
+    super(id, entryScore, semesterResults);
+    setInServicePlaceId(inServicePlaceId);
+  }
+
+  public InServiceStudent(InServiceStudent student) {
+    super(student.getId(), student.getEntryScore(), student.getSemesterResults());
+    setInServicePlaceId(inServicePlaceId);
+  }
+
+  public static InServiceStudent createNewStudent(InServiceStudent student) {
+    student.setId(generateNewStudentId());
+    return new InServiceStudent(student);
+  }
+
+  public static InServiceStudent createNewStudent(float entryScoreList, List<SemesterResult> semesterResults,
+      String inServicePlaceId) {
+    return new InServiceStudent(generateNewStudentId(), entryScoreList, semesterResults, inServicePlaceId);
+  }
+
+
+  public String getInServicePlaceId() {
+    return inServicePlaceId;
+  }
+
+  public void setInServicePlaceId(String inServicePlaceId) {
+    this.inServicePlaceId = inServicePlaceId;
+  }
+
+  @Override
+  public String toString() {
+    return "InService{" +
+        "id='" + this.getId() + '\'' +
+        ", entryScore=" + this.getEntryScore() +
+        ", results=" + new Gson().toJson(this.getSemesterResults()) +
+        ", education=" + this.inServicePlaceId +
+        '}';
+  }
+
+
+}
