@@ -5,6 +5,7 @@ import enumeration.DepartmentType;
 import exception.InvalidStudentIdException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import util.ValidatorUtil;
 
 public abstract class BaseStudent {
@@ -77,5 +78,15 @@ public abstract class BaseStudent {
 
   public void setDepartmentType(DepartmentType departmentType) {
     this.departmentType = departmentType;
+  }
+
+  public float getMaxAverageScoreOfStudent() {
+    AtomicReference<Float> maxScore = new AtomicReference<>((float) 0);
+    semesterResults.forEach(semesterResult -> {
+      if (maxScore.get() < semesterResult.getAverage()) {
+        maxScore.set(semesterResult.getAverage());
+      }
+    });
+    return maxScore.get();
   }
 }
