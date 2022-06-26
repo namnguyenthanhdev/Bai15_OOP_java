@@ -19,7 +19,7 @@ import java.util.*;
 
 
 public class Main {
-
+//test
   private final Set<DepartmentType> ALL_DEPARTMENTS = new HashSet<DepartmentType>() {{
     add(DepartmentType.BA);
     add(DepartmentType.IT);
