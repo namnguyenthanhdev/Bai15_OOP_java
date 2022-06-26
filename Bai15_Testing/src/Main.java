@@ -5,6 +5,7 @@ import dto.SemesterResult;
 
 import dto.student.InServiceStudent;
 
+import enumeration.DepartmentType;
 import enumeration.SemesterType;
 import java.time.Year;
 import service.inservicePlace.InServicePlaceImplement;
@@ -19,6 +20,12 @@ import java.util.*;
 
 public class Main {
 
+  private final Set<DepartmentType> ALL_DEPARTMENTS = new HashSet<DepartmentType>() {{
+    add(DepartmentType.BA);
+    add(DepartmentType.IT);
+    add(DepartmentType.BT);
+  }};
+
   public static void main(String[] args) {
 
     InServicePlaceInterface inServicePlaceManager = new InServicePlaceImplement();
@@ -30,6 +37,7 @@ public class Main {
 
     studentManager.addNewStudent(new RegularStudentBuilder()
         .setEntryScore(3)
+        .setDepartmentType(DepartmentType.IT)
         .setSemesterResults(Arrays.asList(
             new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
             new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
@@ -37,6 +45,7 @@ public class Main {
     );
     studentManager.addNewStudent(new RegularStudentBuilder()
         .setEntryScore(5)
+        .setDepartmentType(DepartmentType.BA)
         .setSemesterResults(Arrays.asList(
             new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
             new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
@@ -45,6 +54,7 @@ public class Main {
     studentManager.addNewStudent(
         new InServiceStudentBuilder()
             .setEntryScore(9)
+            .setDepartmentType(DepartmentType.BT)
             .setSemesterResults(Arrays.asList(
                 new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
@@ -53,6 +63,7 @@ public class Main {
     InServiceStudent studentBinhDuong = (InServiceStudent) studentManager.addNewStudent(
         new InServiceStudentBuilder()
             .setEntryScore(5)
+            .setDepartmentType(DepartmentType.IT)
             .setSemesterResults(Arrays.asList(
                 new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))

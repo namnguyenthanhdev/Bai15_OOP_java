@@ -2,6 +2,7 @@ package builder;
 
 import dto.SemesterResult;
 import dto.student.RegularStudent;
+import enumeration.DepartmentType;
 import java.util.List;
 
 public class RegularStudentBuilder {
@@ -9,6 +10,8 @@ public class RegularStudentBuilder {
   private String id;
   private float entryScore;
   private List<SemesterResult> semesterResults;
+
+  private DepartmentType departmentType;
 
   public RegularStudentBuilder setId(String id) {
     this.id = id;
@@ -26,7 +29,12 @@ public class RegularStudentBuilder {
     return this;
   }
 
+  public RegularStudentBuilder setDepartmentType(DepartmentType departmentType) {
+    this.departmentType = departmentType;
+    return this;
+  }
+
   public RegularStudent build() {
-    return new RegularStudent(this.id, this.entryScore, this.semesterResults);
+    return new RegularStudent(this.id, this.entryScore, this.semesterResults, this.departmentType);
   }
 }

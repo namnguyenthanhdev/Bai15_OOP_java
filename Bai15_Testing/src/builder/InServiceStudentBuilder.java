@@ -2,7 +2,7 @@ package builder;
 
 import dto.SemesterResult;
 import dto.student.InServiceStudent;
-import dto.student.RegularStudent;
+import enumeration.DepartmentType;
 import java.util.List;
 
 public class InServiceStudentBuilder {
@@ -12,6 +12,8 @@ public class InServiceStudentBuilder {
   private List<SemesterResult> semesterResults;
 
   private String inServicePlaceId;
+
+  private DepartmentType departmentType;
 
   public InServiceStudentBuilder setId(String id) {
     this.id = id;
@@ -35,7 +37,15 @@ public class InServiceStudentBuilder {
     return this;
   }
 
-  public InServiceStudent build() {
-    return new InServiceStudent(this.id, this.entryScore, this.semesterResults, this.inServicePlaceId);
+  public InServiceStudentBuilder setDepartmentType(DepartmentType departmentType) {
+    this.departmentType = departmentType;
+    return this;
   }
+
+  public InServiceStudent build() {
+    return new InServiceStudent(this.id, this.entryScore, this.semesterResults, this.departmentType,
+        this.inServicePlaceId);
+  }
+
+
 }

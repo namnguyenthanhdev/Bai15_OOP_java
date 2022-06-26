@@ -2,30 +2,30 @@ package dto.student;
 
 import com.google.gson.Gson;
 import dto.SemesterResult;
+import enumeration.DepartmentType;
 import java.util.List;
+
 
 public class InServiceStudent extends BaseStudent {
 
   private String inServicePlaceId;
 
-  public InServiceStudent(String id, float entryScore, List<SemesterResult> semesterResults, String inServicePlaceId) {
-    super(id, entryScore, semesterResults);
+
+  public InServiceStudent(InServiceStudent student) {
+    super(student.getId(), student.getEntryScore(), student.getSemesterResults(), student.getDepartmentType());
     setInServicePlaceId(inServicePlaceId);
   }
 
-  public InServiceStudent(InServiceStudent student) {
-    super(student.getId(), student.getEntryScore(), student.getSemesterResults());
-    setInServicePlaceId(inServicePlaceId);
+  public InServiceStudent(String id, float entryScore, List<SemesterResult> semesterResults,
+      DepartmentType departmentType, String inServicePlaceId) {
+    super(id, entryScore, semesterResults, departmentType);
+    this.inServicePlaceId = inServicePlaceId;
   }
+
 
   public static InServiceStudent createNewStudent(InServiceStudent student) {
     student.setId(generateNewStudentId());
     return new InServiceStudent(student);
-  }
-
-  public static InServiceStudent createNewStudent(float entryScoreList, List<SemesterResult> semesterResults,
-      String inServicePlaceId) {
-    return new InServiceStudent(generateNewStudentId(), entryScoreList, semesterResults, inServicePlaceId);
   }
 
 
