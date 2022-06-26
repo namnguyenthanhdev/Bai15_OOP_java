@@ -21,6 +21,8 @@ import java.util.*;
 public class Main {
 //test
   //Test 2;
+
+  //test git 4
   private final Set<DepartmentType> ALL_DEPARTMENTS = new HashSet<DepartmentType>() {{
     add(DepartmentType.BA);
     add(DepartmentType.IT);
