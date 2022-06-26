@@ -2,7 +2,7 @@ import builder.InServiceStudentBuilder;
 import builder.RegularStudentBuilder;
 import dto.InServicePlace;
 import dto.SemesterResult;
-import dto.student.RegularStudent;
+
 import dto.student.InServiceStudent;
 
 import enumeration.SemesterType;
@@ -50,15 +50,19 @@ public class Main {
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
             .setInServicePlaceId(placeHCM.getPlaceId()).build());
 
-    studentManager.addNewStudent(
+    InServiceStudent studentBinhDuong = (InServiceStudent) studentManager.addNewStudent(
         new InServiceStudentBuilder()
             .setEntryScore(5)
             .setSemesterResults(Arrays.asList(
                 new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
-            .setInServicePlaceId(placeHCM.getPlaceId()).build());
+            .setInServicePlaceId(placeBinhDuong.getPlaceId()).build());
 
     studentManager.printMapStudents();
+    System.out.println("getAverageScoreOfStudentBySemester studentId=" + studentBinhDuong.getId() + " score="
+        + studentManager.getAverageScoreOfStudentBySemester(
+        studentBinhDuong.getId(), Year.of(2015), SemesterType.FIRST));
+
   }
 
 }

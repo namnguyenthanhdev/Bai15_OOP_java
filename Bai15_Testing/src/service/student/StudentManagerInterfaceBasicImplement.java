@@ -2,6 +2,7 @@ package service.student;
 
 import com.google.gson.Gson;
 import dto.InServicePlace;
+import dto.SemesterResult;
 import dto.student.BaseStudent;
 
 import dto.student.InServiceStudent;
@@ -11,6 +12,7 @@ import enumeration.SemesterType;
 import enumeration.StudentType;
 import exception.AlreadyExistException;
 import exception.InvalidStudentTypeException;
+import exception.NotFoundException;
 import exception.StudentNotFoundException;
 import java.time.Year;
 import java.util.ArrayList;
@@ -36,10 +38,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public boolean isRegularStudent(String studentId) {
-    if (!studentMap.containsKey(studentId)) {
-      throw new StudentNotFoundException(studentId);
-    }
-    BaseStudent student = studentMap.get(studentId);
+    BaseStudent student = getStudentFromMap(studentId);
     return checkStudentType(student) == StudentType.REGULAR;
   }
 
@@ -78,7 +77,22 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public float getAverageScoreOfStudentBySemester(String studentId, Year year, SemesterType semesterType) {
-    return 0;
+    BaseStudent student = getStudentFromMap(studentId);
+    List<SemesterResult> results = student.getSemesterResults();
+    if (results == null || results.isEmpty()) {
+      throw new NotFoundException("result not found");
+    }
+    Float averageScore = null;
+    for (SemesterResult result : results) {
+      if (result.getSemester() == semesterType && result.getYear().equals(year)) {
+        averageScore = result.getAverage();
+        break;
+      }
+    }
+    if (averageScore == null) {
+      throw new NotFoundException("result not found");
+    }
+    return averageScore;
   }
 
   @Override
@@ -106,6 +120,13 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
   @Override
   public List<BaseStudent> sortStudentAscendingByScoreAndDescendingByYear(DepartmentType departmentType) {
     return null;
+  }
+
+  private BaseStudent getStudentFromMap(String studentId) {
+    if (!studentMap.containsKey(studentId)) {
+      throw new StudentNotFoundException(studentId);
+    }
+    return studentMap.get(studentId);
   }
 
   private StudentType checkStudentType(BaseStudent student) {
