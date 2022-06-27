@@ -11,6 +11,7 @@ import java.util.List;
 public interface StudentManagerInterface {
 
   boolean isRegularStudent(String studentId);
+  boolean isInServiceStudent(String studentId);
 
   //TODO: remove after test
   void printMapStudents();
@@ -23,7 +24,7 @@ public interface StudentManagerInterface {
 
   List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(
       DepartmentType departmentType,
-      InServicePlace inServicePlace);
+      String inServicePlaceAddress);
 
   List<BaseStudent> getAverageScoreBiggerThanEightInRecentSemesterByDepartmentType(DepartmentType departmentType);
 

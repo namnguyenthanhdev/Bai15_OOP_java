@@ -6,9 +6,7 @@ import com.google.gson.Gson;
 
 
 import java.util.List;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class Department {
 
   private DepartmentType name;

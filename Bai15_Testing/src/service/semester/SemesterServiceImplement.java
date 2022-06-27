@@ -4,13 +4,14 @@ import enumeration.SemesterType;
 import java.security.InvalidParameterException;
 import java.time.Year;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
-import javafx.util.Pair;
+import java.util.Set;
 
 public class SemesterServiceImplement implements SemesterServiceInterface {
+  private Set<Map<SemesterType, Year>> pairSemester = new HashSet<>();
 
-  private Map<String, Pair<SemesterType, Year>> semesterMap = new HashMap<>();
-
+  private Map<String, Set<Map<SemesterType, Year>>> semesterMap = new HashMap<>();
 
   private final String DELIMITER = "|";
 
@@ -27,8 +28,8 @@ public class SemesterServiceImplement implements SemesterServiceInterface {
 
 
 
-  private Pair<SemesterType, Year> createSemester(SemesterType semesterType, Year year) {
-    Pair<SemesterType, Year> newData = new Pair<>(semesterType, year);
+  private Set<Map<SemesterType, Year>> createSemester(SemesterType semesterType, Year year) {
+    Set<Map<SemesterType, Year>> newData = new HashSet<> ();
     semesterMap.put(buildSemesterKey(semesterType, year), newData);
     return newData;
   }

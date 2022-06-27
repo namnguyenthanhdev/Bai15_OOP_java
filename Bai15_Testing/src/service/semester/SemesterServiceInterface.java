@@ -3,7 +3,10 @@ package service.semester;
 import dto.InServicePlace;
 import enumeration.SemesterType;
 import java.time.Year;
-import javafx.util.Pair;
+import java.util.Collections;
+import java.util.Map;
+//import javafx.util.Pair;
+
 
 public interface SemesterServiceInterface {
 

@@ -17,6 +17,10 @@ public class StudentManagerInterfaceAdvanceImplement implements StudentManagerIn
   }
 
   @Override
+  public boolean isInServiceStudent(String studentId) { return false;
+  }
+
+  @Override
   public void printMapStudents() {
 
   }
@@ -38,7 +42,7 @@ public class StudentManagerInterfaceAdvanceImplement implements StudentManagerIn
 
   @Override
   public List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(DepartmentType departmentType,
-      InServicePlace inServicePlace) {
+      String inServicePlaceAddress){
     return null;
   }
 
