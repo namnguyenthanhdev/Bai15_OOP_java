@@ -36,6 +36,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     private final Map<String, BaseStudent> studentMap = new HashMap<>();
 
     private SemesterServiceInterface semesterService;
+
     private InServicePlaceInterface inServicePlaceService;
 
     private List<String> regularStudentIds = new ArrayList<>();
@@ -46,6 +47,8 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
 
     public StudentManagerInterfaceBasicImplement(SemesterServiceInterface semesterServiceInterface) {
+      //TODO: check the usage of this constructor, why need this
+      // Reference: Dependency Injection and Inversion of Control
         this.semesterService = semesterServiceInterface;
     }
 
