@@ -15,6 +15,7 @@ import exception.NotFoundException;
 import exception.StudentNotFoundException;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -188,9 +189,14 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   private void addStudentIntoDepartmentTypeMap(String studentId, DepartmentType departmentType) {
     if (!studentIdByDepartmentTypeMap.containsKey(departmentType)) {
-      studentIdByDepartmentTypeMap.put(departmentType, Collections.singletonList(studentId));
-    } else {
-      studentIdByDepartmentTypeMap.get(departmentType).add(studentId);
+      studentIdByDepartmentTypeMap.put(departmentType, new ArrayList<>(Arrays.asList(studentId)));
+      return;
     }
+    if (studentIdByDepartmentTypeMap.get(departmentType) == null) {
+      studentIdByDepartmentTypeMap.put(departmentType, new ArrayList<>(Arrays.asList(studentId)));
+      return;
+    }
+    studentIdByDepartmentTypeMap.get(departmentType).add(studentId);
+
   }
 }
