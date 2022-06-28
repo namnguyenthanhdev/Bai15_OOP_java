@@ -14,10 +14,12 @@ import exception.InvalidStudentTypeException;
 import exception.NotFoundException;
 import exception.StudentNotFoundException;
 import java.time.Year;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
-
-import service.inservicePlace.InServicePlaceInterface;
 import service.semester.SemesterServiceInterface;
 
 
@@ -26,11 +28,10 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
   private final Map<String, BaseStudent> studentMap = new HashMap<>();
 
   private SemesterServiceInterface semesterService;
-  private InServicePlaceInterface inServicePlaceService;
 
   private List<String> regularStudentIds = new ArrayList<>();
 
-  private List<String> inServiceStudentIds = new ArrayList<>();
+  private List<String> inServiceStudents = new ArrayList<>();
 
   private Map<DepartmentType, List<String>> studentIdByDepartmentTypeMap = new HashMap<>();
 
@@ -46,13 +47,6 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
   }
 
   @Override
-  public boolean isInServiceStudent(String studentId){
-    BaseStudent student = getStudentFromMap(studentId);
-    return checkStudentType(student) == StudentType.IN_SERVICE;
-  }
-
-
-  @Override
   public void printMapStudents() {
     studentMap.values().forEach(value -> {
       System.out.println(new Gson().toJson(value) + checkStudentType(value).name());
@@ -66,11 +60,9 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     switch (studentType) {
       case IN_SERVICE:
         newStudent = InServiceStudent.createNewStudent((InServiceStudent) dto);
-        inServiceStudentIds.add(newStudent.getId());
         break;
       case REGULAR:
         newStudent = RegularStudent.createNewStudent((RegularStudent) dto);
-        regularStudentIds.add(newStudent.getId());
         break;
       default: {
       }
@@ -113,28 +105,13 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public int getTotalRegularStudentByDepartment(DepartmentType departmentType) {
-    return regularStudentIds.size();
+    return 0;
   }
 
   @Override
   public List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(DepartmentType departmentType,
-      String inServicePlaceAddress) {
-    if (!studentIdByDepartmentTypeMap.containsKey(departmentType)){
-      return null;
-    }
-    List <InServiceStudent> results = new ArrayList<>();
-    studentIdByDepartmentTypeMap.get(departmentType).forEach(
-            studentId -> {
-              BaseStudent student = getStudentFromMap(studentId);
-              if (student instanceof InServiceStudent ){
-                InServiceStudent inServiceStudent = (InServiceStudent) student;
-                if (inServicePlaceService.getPlace(inServiceStudent.getInServicePlaceId()).getAddress().equals(inServicePlaceAddress)){
-                  results.add(inServiceStudent);
-                }
-              }
-            }
-    );
-    return results;
+      InServicePlace inServicePlace) {
+    return null;
   }
 
   @Override
@@ -184,8 +161,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public List<BaseStudent> sortStudentAscendingByScoreAndDescendingByYear(DepartmentType departmentType) {
-     return getListStudentInDepartmentType(departmentType).stream().sorted(Comparator.comparingDouble(BaseStudent::getEntryScore)
-             .thenComparing(BaseStudent::getEntryYear).reversed()).collect(Collectors.toList());
+    return null;
   }
 
   private BaseStudent getStudentFromMap(String studentId) {
@@ -194,7 +170,6 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     }
     return studentMap.get(studentId);
   }
-
 
   private StudentType checkStudentType(BaseStudent student) {
     if (student instanceof RegularStudent) {
@@ -218,16 +193,4 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
       studentIdByDepartmentTypeMap.get(departmentType).add(studentId);
     }
   }
-
-//  private void addStudentIntoInServiceStudentList(BaseStudent dto){
-//    if (dto instanceof InServiceStudent inServiceStudent){
-//      inServiceStudentIds.add(inServiceStudent.getId());
-//    }
-//  }
-//
-//  private void addStudentIntoRegularStudentList(BaseStudent dto){
-//    if (dto instanceof RegularStudent regularStudent){
-//      regularStudentIds.add(regularStudent.getId());
-//    }
-//  }
 }
