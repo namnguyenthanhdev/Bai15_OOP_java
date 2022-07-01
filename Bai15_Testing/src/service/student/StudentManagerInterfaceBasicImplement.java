@@ -180,7 +180,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
       BaseStudent student = studentMap.get(studentId);
       if (currentMaxScore < student.getMaxAverageScoreOfStudent()) {
         currentMaxScore = student.getMaxAverageScoreOfStudent();
-        maxScoreStudents = Collections.singletonList(student);
+        maxScoreStudents = new ArrayList<>(Arrays.asList(student));
       } else if (currentMaxScore == student.getMaxAverageScoreOfStudent()) {
         maxScoreStudents.add(student);
       }
