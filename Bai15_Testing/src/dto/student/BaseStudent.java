@@ -3,6 +3,7 @@ package dto.student;
 import dto.SemesterResult;
 import enumeration.DepartmentType;
 import exception.InvalidStudentIdException;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -14,6 +15,8 @@ public abstract class BaseStudent {
   private String id;
   private float entryScore;
   private DepartmentType departmentType;
+
+  private Year entryYear;
 
   private List<SemesterResult> semesterResults = new ArrayList<>();
 
@@ -35,8 +38,10 @@ public abstract class BaseStudent {
   }
 
 
-  public BaseStudent(String id, float entryScore, List<SemesterResult> semesterResults, DepartmentType departmentType) {
+  public BaseStudent(String id, float entryScore, List<SemesterResult> semesterResults, DepartmentType departmentType,
+      Year entryYear) {
     this.id = id;
+    setEntryYear(entryYear);
     setEntryScore(entryScore);
     setSemesterResults(semesterResults);
     setDepartmentType(departmentType);
@@ -78,6 +83,14 @@ public abstract class BaseStudent {
 
   public void setDepartmentType(DepartmentType departmentType) {
     this.departmentType = departmentType;
+  }
+
+  public Year getEntryYear() {
+    return entryYear;
+  }
+
+  public void setEntryYear(Year entryYear) {
+    this.entryYear = entryYear;
   }
 
   public float getMaxAverageScoreOfStudent() {

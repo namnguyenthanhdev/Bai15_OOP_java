@@ -3,6 +3,7 @@ package builder;
 import dto.SemesterResult;
 import dto.student.InServiceStudent;
 import enumeration.DepartmentType;
+import java.time.Year;
 import java.util.List;
 
 public class InServiceStudentBuilder {
@@ -14,6 +15,10 @@ public class InServiceStudentBuilder {
   private String inServicePlaceId;
 
   private DepartmentType departmentType;
+  private Year entryYear;
+
+  public InServiceStudentBuilder() {
+  }
 
   public InServiceStudentBuilder setId(String id) {
     this.id = id;
@@ -37,13 +42,18 @@ public class InServiceStudentBuilder {
     return this;
   }
 
+  public InServiceStudentBuilder setEntryYear(Year entryYear) {
+    this.entryYear = entryYear;
+    return this;
+  }
+
   public InServiceStudentBuilder setDepartmentType(DepartmentType departmentType) {
     this.departmentType = departmentType;
     return this;
   }
 
   public InServiceStudent build() {
-    return new InServiceStudent(this.id, this.entryScore, this.semesterResults, this.departmentType,
+    return new InServiceStudent(this.id, this.entryScore, this.semesterResults, this.entryYear, this.departmentType,
         this.inServicePlaceId);
   }
 

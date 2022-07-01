@@ -1,14 +1,10 @@
 package dto;
 
+import com.google.gson.Gson;
 import dto.student.BaseStudent;
 import enumeration.DepartmentType;
-import com.google.gson.Gson;
-
-
 import java.util.List;
-import lombok.EqualsAndHashCode;
 
-@EqualsAndHashCode
 public class Department {
 
   private DepartmentType name;

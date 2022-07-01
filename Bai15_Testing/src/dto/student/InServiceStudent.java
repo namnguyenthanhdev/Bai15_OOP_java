@@ -3,6 +3,7 @@ package dto.student;
 import com.google.gson.Gson;
 import dto.SemesterResult;
 import enumeration.DepartmentType;
+import java.time.Year;
 import java.util.List;
 
 
@@ -12,14 +13,15 @@ public class InServiceStudent extends BaseStudent {
 
 
   public InServiceStudent(InServiceStudent student) {
-    super(student.getId(), student.getEntryScore(), student.getSemesterResults(), student.getDepartmentType());
-    setInServicePlaceId(inServicePlaceId);
+    super(student.getId(), student.getEntryScore(), student.getSemesterResults(), student.getDepartmentType(),
+        student.getEntryYear());
+    setInServicePlaceId(student.getInServicePlaceId());
   }
 
-  public InServiceStudent(String id, float entryScore, List<SemesterResult> semesterResults,
+  public InServiceStudent(String id, float entryScore, List<SemesterResult> semesterResults, Year entryYear,
       DepartmentType departmentType, String inServicePlaceId) {
-    super(id, entryScore, semesterResults, departmentType);
-    this.inServicePlaceId = inServicePlaceId;
+    super(id, entryScore, semesterResults, departmentType, entryYear);
+    setInServicePlaceId(inServicePlaceId);
   }
 
 

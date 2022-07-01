@@ -1,7 +1,6 @@
 package service.student;
 
 import com.google.gson.Gson;
-import dto.InServicePlace;
 import dto.SemesterResult;
 import dto.student.BaseStudent;
 import dto.student.InServiceStudent;
@@ -15,11 +14,14 @@ import exception.NotFoundException;
 import exception.StudentNotFoundException;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import service.inservicePlace.InServicePlaceInterface;
 import service.semester.SemesterServiceInterface;
 
 
@@ -29,15 +31,19 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   private SemesterServiceInterface semesterService;
 
+  private InServicePlaceInterface inServicePlaceService;
+
   private List<String> regularStudentIds = new ArrayList<>();
 
-  private List<String> inServiceStudents = new ArrayList<>();
+  private List<String> inServiceStudentIds = new ArrayList<>();
 
   private Map<DepartmentType, List<String>> studentIdByDepartmentTypeMap = new HashMap<>();
 
 
-  public StudentManagerInterfaceBasicImplement(SemesterServiceInterface semesterServiceInterface) {
+  public StudentManagerInterfaceBasicImplement(SemesterServiceInterface semesterServiceInterface,
+      InServicePlaceInterface inServicePlaceInterface) {
     this.semesterService = semesterServiceInterface;
+    this.inServicePlaceService = inServicePlaceInterface;
   }
 
   @Override
@@ -45,6 +51,13 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     BaseStudent student = getStudentFromMap(studentId);
     return checkStudentType(student) == StudentType.REGULAR;
   }
+
+  @Override
+  public boolean isInServiceStudent(String studentId) {
+    BaseStudent student = getStudentFromMap(studentId);
+    return checkStudentType(student) == StudentType.IN_SERVICE;
+  }
+
 
   @Override
   public void printMapStudents() {
@@ -60,9 +73,11 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     switch (studentType) {
       case IN_SERVICE:
         newStudent = InServiceStudent.createNewStudent((InServiceStudent) dto);
+        inServiceStudentIds.add(newStudent.getId());
         break;
       case REGULAR:
         newStudent = RegularStudent.createNewStudent((RegularStudent) dto);
+        regularStudentIds.add(newStudent.getId());
         break;
       default: {
       }
@@ -105,13 +120,29 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public int getTotalRegularStudentByDepartment(DepartmentType departmentType) {
-    return 0;
+    return regularStudentIds.size();
   }
 
   @Override
   public List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(DepartmentType departmentType,
-      InServicePlace inServicePlace) {
-    return null;
+      String inServicePlaceAddress) {
+    if (!studentIdByDepartmentTypeMap.containsKey(departmentType) || studentIdByDepartmentTypeMap == null) {
+      return null;
+    }
+    List<InServiceStudent> results = new ArrayList<>();
+    studentIdByDepartmentTypeMap.get(departmentType).forEach(
+        studentId -> {
+          BaseStudent student = getStudentFromMap(studentId);
+          if (student instanceof InServiceStudent) {
+            InServiceStudent inServiceStudent = (InServiceStudent) student;
+            if (inServicePlaceService.getPlace(inServiceStudent.getInServicePlaceId()).getAddress()
+                .equals(inServicePlaceAddress)) {
+              results.add(inServiceStudent);
+            }
+          }
+        }
+    );
+    return results;
   }
 
   @Override
@@ -149,7 +180,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
       BaseStudent student = studentMap.get(studentId);
       if (currentMaxScore < student.getMaxAverageScoreOfStudent()) {
         currentMaxScore = student.getMaxAverageScoreOfStudent();
-        maxScoreStudents = Collections.singletonList(student);
+        maxScoreStudents = new ArrayList<>(Arrays.asList(student));
       } else if (currentMaxScore == student.getMaxAverageScoreOfStudent()) {
         maxScoreStudents.add(student);
       }
@@ -161,7 +192,9 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
 
   @Override
   public List<BaseStudent> sortStudentAscendingByScoreAndDescendingByYear(DepartmentType departmentType) {
-    return null;
+    return getListStudentInDepartmentType(departmentType).stream()
+        .sorted(Comparator.comparingDouble(BaseStudent::getEntryScore)
+            .thenComparing(BaseStudent::getEntryYear).reversed()).collect(Collectors.toList());
   }
 
   private BaseStudent getStudentFromMap(String studentId) {
@@ -170,6 +203,7 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
     }
     return studentMap.get(studentId);
   }
+
 
   private StudentType checkStudentType(BaseStudent student) {
     if (student instanceof RegularStudent) {
@@ -187,10 +221,15 @@ public class StudentManagerInterfaceBasicImplement implements StudentManagerInte
   }
 
   private void addStudentIntoDepartmentTypeMap(String studentId, DepartmentType departmentType) {
-    if (!studentIdByDepartmentTypeMap.containsKey(departmentType)) {
-      studentIdByDepartmentTypeMap.put(departmentType, Collections.singletonList(studentId));
-    } else {
-      studentIdByDepartmentTypeMap.get(departmentType).add(studentId);
+    if (!studentIdByDepartmentTypeMap.containsKey(departmentType)
+        || studentIdByDepartmentTypeMap.get(departmentType) == null) {
+      studentIdByDepartmentTypeMap.put(departmentType, new ArrayList<>(Arrays.asList(studentId)));
+      return;
     }
+
+    studentIdByDepartmentTypeMap.get(departmentType).add(studentId);
+
   }
+
+
 }
