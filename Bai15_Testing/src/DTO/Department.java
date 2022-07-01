@@ -1,50 +1,41 @@
-package DTO;
+package dto;
 
 import com.google.gson.Gson;
-import lombok.EqualsAndHashCode;
-
+import dto.student.BaseStudent;
+import enumeration.DepartmentType;
 import java.util.List;
 
-@EqualsAndHashCode
 public class Department {
-    public enum DepartmentType{
-        IT,
-        BT,
-        BA
-    }
-    private DepartmentType name;
-    private List<Student> students;
 
-    public Department() {
-    }
+  private DepartmentType name;
+  private List<BaseStudent> baseStudents;
 
-    public Department(DepartmentType name, List<Student> students) {
-        this.name = name;
-        this.students = students;
-    }
+  public Department(DepartmentType name, List<BaseStudent> baseStudents) {
+    this.name = name;
+    this.baseStudents = baseStudents;
+  }
 
-    public DepartmentType getName() {
-        return name;
-    }
+  public DepartmentType getName() {
+    return name;
+  }
 
-    public void setName(DepartmentType name) {
-        this.name = name;
-    }
+  public void setName(DepartmentType name) {
+    this.name = name;
+  }
 
-    public List<Student> getStudents() {
-        return students;
-    }
+  public List<BaseStudent> getBaseStudents() {
+    return baseStudents;
+  }
 
-    public void setStudents(List<Student> students) {
-        this.students = students;
-    }
+  public void setBaseStudents(List<BaseStudent> baseStudents) {
+    this.baseStudents = baseStudents;
+  }
 
-    @Override
-    public String toString() {
-        Gson gson = new Gson();
-        return "Department{" +
-                "name=" + name +
-                ", students=" + gson.toJson(students) +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Department{" +
+        "name=" + getName() +
+        ", baseStudents=" + new Gson().toJson(getBaseStudents()) +
+        '}';
+  }
 }
