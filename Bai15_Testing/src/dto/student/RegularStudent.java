@@ -1,16 +1,15 @@
 package dto.student;
 
 import com.google.gson.Gson;
-
 import dto.SemesterResult;
 import enumeration.DepartmentType;
-
 import java.time.Year;
 import java.util.List;
 
 public class RegularStudent extends BaseStudent {
 
-  public RegularStudent(String id, float entryScore, List<SemesterResult> results, Year entryYear, DepartmentType departmentType) {
+  public RegularStudent(String id, float entryScore, List<SemesterResult> results, Year entryYear,
+      DepartmentType departmentType) {
     super(id, entryScore, results, departmentType, entryYear);
   }
 

@@ -1,9 +1,8 @@
 package dto;
 
 import enumeration.SemesterType;
-import util.ValidatorUtil;
-
 import java.time.Year;
+import util.ValidatorUtil;
 
 public class SemesterResult {
 
@@ -34,7 +33,7 @@ public class SemesterResult {
   }
 
   public void setAverage(float average) {
-    if (ValidatorUtil.checkValidScore(average)){
+    if (ValidatorUtil.checkValidScore(average)) {
       this.average = average;
     }
   }
@@ -43,7 +42,7 @@ public class SemesterResult {
   @Override
   public String toString() {
     return "Result{" + "semester=" + semester +
-            ", year=" + year + ", average=" + average + '}';
+        ", year=" + year + ", average=" + average + '}';
   }
 
   public Year getYear() {

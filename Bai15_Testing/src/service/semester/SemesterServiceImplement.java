@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SemesterServiceImplement implements SemesterServiceInterface {
+
   private Set<Map<SemesterType, Year>> pairSemester = new HashSet<>();
 
   private Map<String, Set<Map<SemesterType, Year>>> semesterMap = new HashMap<>();
@@ -27,9 +28,8 @@ public class SemesterServiceImplement implements SemesterServiceInterface {
   }
 
 
-
   private Set<Map<SemesterType, Year>> createSemester(SemesterType semesterType, Year year) {
-    Set<Map<SemesterType, Year>> newData = new HashSet<> ();
+    Set<Map<SemesterType, Year>> newData = new HashSet<>();
     semesterMap.put(buildSemesterKey(semesterType, year), newData);
     return newData;
   }

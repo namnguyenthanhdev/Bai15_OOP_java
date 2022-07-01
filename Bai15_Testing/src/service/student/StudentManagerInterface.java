@@ -1,6 +1,5 @@
 package service.student;
 
-import dto.InServicePlace;
 import dto.student.BaseStudent;
 import dto.student.InServiceStudent;
 import enumeration.DepartmentType;
@@ -11,6 +10,7 @@ import java.util.List;
 public interface StudentManagerInterface {
 
   boolean isRegularStudent(String studentId);
+
   boolean isInServiceStudent(String studentId);
 
   //TODO: remove after test

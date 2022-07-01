@@ -1,6 +1,5 @@
 package service.student;
 
-import dto.InServicePlace;
 import dto.student.BaseStudent;
 import dto.student.InServiceStudent;
 import enumeration.DepartmentType;
@@ -17,7 +16,8 @@ public class StudentManagerInterfaceAdvanceImplement implements StudentManagerIn
   }
 
   @Override
-  public boolean isInServiceStudent(String studentId) { return false;
+  public boolean isInServiceStudent(String studentId) {
+    return false;
   }
 
   @Override
@@ -42,7 +42,7 @@ public class StudentManagerInterfaceAdvanceImplement implements StudentManagerIn
 
   @Override
   public List<InServiceStudent> getInServiceStudentListByDepartmentTypeAndInServicePlace(DepartmentType departmentType,
-      String inServicePlaceAddress){
+      String inServicePlaceAddress) {
     return null;
   }
 

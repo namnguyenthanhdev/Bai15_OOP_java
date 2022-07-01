@@ -1,17 +1,14 @@
 import builder.InServiceStudentBuilder;
 import builder.RegularStudentBuilder;
-import builder.SemesterResultBuilder;
-import com.sun.xml.internal.bind.v2.TODO;
 import dto.InServicePlace;
 import dto.SemesterResult;
-
 import dto.student.InServiceStudent;
-
 import enumeration.DepartmentType;
 import enumeration.SemesterType;
-
-import java.lang.reflect.Array;
 import java.time.Year;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import service.inservicePlace.InServicePlaceImplement;
 import service.inservicePlace.InServicePlaceInterface;
 import service.semester.SemesterServiceImplement;
@@ -19,12 +16,9 @@ import service.semester.SemesterServiceInterface;
 import service.student.StudentManagerInterface;
 import service.student.StudentManagerInterfaceBasicImplement;
 
-import java.util.*;
-
 
 public class Main {
-//test
-  //Test 3;
+
   private final Set<DepartmentType> ALL_DEPARTMENTS = new HashSet<DepartmentType>() {{
     add(DepartmentType.BA);
     add(DepartmentType.IT);
@@ -36,7 +30,8 @@ public class Main {
 
     InServicePlaceInterface inServicePlaceManager = new InServicePlaceImplement();
     SemesterServiceInterface semesterManager = new SemesterServiceImplement();
-    StudentManagerInterface studentManager = new StudentManagerInterfaceBasicImplement(semesterManager);
+    StudentManagerInterface studentManager =
+        new StudentManagerInterfaceBasicImplement(semesterManager, inServicePlaceManager);
 
     InServicePlace placeBinhDuong = inServicePlaceManager.createNewPlace(new InServicePlace("", "Bình Dương", "0908"));
     InServicePlace placeHCM = inServicePlaceManager.createNewPlace(new InServicePlace("", "HCM", "1900"));
@@ -44,7 +39,7 @@ public class Main {
     studentManager.addNewStudent(new RegularStudentBuilder()
         .setEntryScore(3)
         .setDepartmentType(DepartmentType.IT)
-            .setEntryYear(Year.of(2014))
+        .setEntryYear(Year.of(2014))
         .setSemesterResults(Arrays.asList(
             new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
             new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
@@ -53,7 +48,7 @@ public class Main {
     studentManager.addNewStudent(new RegularStudentBuilder()
         .setEntryScore(5)
         .setDepartmentType(DepartmentType.BA)
-            .setEntryYear(Year.of(2014))
+        .setEntryYear(Year.of(2014))
         .setSemesterResults(Arrays.asList(
             new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
             new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
@@ -63,8 +58,8 @@ public class Main {
         new InServiceStudentBuilder()
             .setEntryScore(9)
             .setDepartmentType(DepartmentType.BT)
-                .setEntryYear(Year.of(2014))
-                .setSemesterResults(Arrays.asList(
+            .setEntryYear(Year.of(2014))
+            .setSemesterResults(Arrays.asList(
                 new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
             .setInServicePlaceId(placeHCM.getPlaceId()).build());
@@ -73,8 +68,8 @@ public class Main {
         new InServiceStudentBuilder()
             .setEntryScore(5)
             .setDepartmentType(DepartmentType.IT)
-                .setEntryYear(Year.of(2014))
-                .setSemesterResults(Arrays.asList(
+            .setEntryYear(Year.of(2014))
+            .setSemesterResults(Arrays.asList(
                 new SemesterResult(SemesterType.FIRST, Year.of(2015), 10),
                 new SemesterResult(SemesterType.SECOND, Year.of(2015), 8)))
             .setInServicePlaceId(placeBinhDuong.getPlaceId()).build());
@@ -85,25 +80,22 @@ public class Main {
         + studentManager.getAverageScoreOfStudentBySemester(
         studentBinhDuong.getId(), Year.of(2015), SemesterType.FIRST));
 
-    System.out.println(studentBinhDuong.getId() + " is regular student? -> " + studentManager.isRegularStudent(studentBinhDuong.getId()));
+    System.out.println(studentBinhDuong.getId() + " is regular student? -> " + studentManager.isRegularStudent(
+        studentBinhDuong.getId()));
 
     System.out.println(studentManager.getTotalRegularStudentByDepartment(DepartmentType.IT));
 
     studentManager.getInServiceStudentListByDepartmentTypeAndInServicePlace(DepartmentType.IT, "HCM")
-            .forEach(System.out::println);
+        .forEach(System.out::println);
 
     studentManager.getAverageScoreBiggerThanEightInRecentSemesterByDepartmentType(DepartmentType.IT)
-            .forEach(System.out::println);
+        .forEach(System.out::println);
 
     studentManager.getMaxAverageScoreStudentFromAllSemester(DepartmentType.IT)
-            .forEach(System.out::println);
+        .forEach(System.out::println);
 
     studentManager.sortStudentAscendingByScoreAndDescendingByYear(DepartmentType.IT)
-            .forEach(System.out::println);
-
-
-
-
+        .forEach(System.out::println);
 
 
   }

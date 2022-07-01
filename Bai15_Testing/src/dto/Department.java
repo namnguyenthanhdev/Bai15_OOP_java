@@ -1,10 +1,8 @@
 package dto;
 
+import com.google.gson.Gson;
 import dto.student.BaseStudent;
 import enumeration.DepartmentType;
-import com.google.gson.Gson;
-
-
 import java.util.List;
 
 public class Department {

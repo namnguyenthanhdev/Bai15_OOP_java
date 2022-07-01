@@ -3,7 +3,6 @@ package builder;
 import dto.SemesterResult;
 import dto.student.RegularStudent;
 import enumeration.DepartmentType;
-
 import java.time.Year;
 import java.util.List;
 
