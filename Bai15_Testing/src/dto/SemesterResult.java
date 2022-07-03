@@ -12,6 +12,7 @@ public class SemesterResult {
   private float average;
   private BaseStudent baseStudent;
 
+
   public SemesterResult(SemesterType semesterType, Year year, float average) {
     this.semesterType = semesterType;
     this.year = year;
