@@ -1,7 +1,10 @@
-/.idea
-/Bai15_Testing/out
-/Bai15_OOP_java.iml
 
-.idea
-Bai15_Testing/out
+/Bai15_Testing/out
+/Bai15_Testing/Bai15_Testing.iml
+/Bai15_Testing/.idea
+
+
+
+/Bai15_OOP_java.iml
+/.idea
 /out
