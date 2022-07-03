@@ -6,6 +6,7 @@ import exception.InvalidStudentIdException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import util.ValidatorUtil;
 
@@ -31,8 +32,8 @@ public abstract class BaseStudent {
   }
 
   protected static String generateNewStudentId() {
-    currentStudentIdGenerator += 1;
-    return STUDENT_ID_PREFIX + currentStudentIdGenerator;
+    UUID uuid = UUID.randomUUID();
+    return STUDENT_ID_PREFIX + uuid.toString();
   }
 
   public static void checkValidId(String id) {

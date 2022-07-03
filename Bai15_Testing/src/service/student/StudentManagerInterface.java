@@ -4,6 +4,7 @@ import dto.student.BaseStudent;
 import dto.student.InServiceStudent;
 import enumeration.DepartmentType;
 import enumeration.SemesterType;
+import java.sql.SQLException;
 import java.time.Year;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface StudentManagerInterface {
 
   boolean isRegularStudent(String studentId);
 
-  BaseStudent addNewStudent(BaseStudent baseStudent);
+  BaseStudent addNewStudent(BaseStudent baseStudent) throws SQLException;
 
   float getAverageScoreOfStudentBySemester(String studentId, Year year, SemesterType semesterType);
 
