@@ -15,8 +15,8 @@ public class StudentRepository {
 
   public static final String INSERT_QUERY = "INSERT INTO student(student_id, student_type, name, entry_score, entry_year, department_type, in_service_place_id) VALUES(?, ?, ?, ?, ?, ?, ?)";
   public static final String UPDATE_BY_ID_QUERY = "UPDATE student SET student_type=? name=?, entry_score=?, entry_year=?, department_type=?, in_service_place_id=? WHERE student_id=?";
-  public static final String SELECT_BY_ID_QUERY = "SELECT * WHERE student_id=?";
-  public static final String SELECT_ALL_QUERY = "SELECT * from student_id";
+  public static final String SELECT_BY_ID_QUERY = "SELECT * from student WHERE student_id= ?";
+  public static final String SELECT_ALL_QUERY = "SELECT * from student";
 
   public StudentRepository() {
   }
@@ -25,7 +25,7 @@ public class StudentRepository {
     Connection connection = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-    StudentEntity student = new StudentEntity();
+    StudentEntity student = null;
     try {
       connection = DatabaseHelper.getInstance().connect();
       if (connection == null || studentId.isEmpty()) {
@@ -36,6 +36,9 @@ public class StudentRepository {
       ps.setString(1, studentId);
       rs = ps.executeQuery();
       System.out.println("retrivePerson => " + ps.toString());
+      if (!rs.isBeforeFirst()) {
+        return null;
+      }
       while (rs.next()) {
         student.setStudentId(rs.getString("student_id"));
         student.setStudentType(StudentType.valueOf(rs.getString("student_type")));
