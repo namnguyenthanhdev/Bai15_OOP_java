@@ -1,6 +1,7 @@
 package dto;
 
 import exception.InvalidPlaceIdException;
+import java.util.UUID;
 import util.ValidatorUtil;
 
 public class InServicePlace {
@@ -12,14 +13,14 @@ public class InServicePlace {
   private String contactNumber;
 
   public InServicePlace(String id, String address, String contactNumber) {
-    this.id = id;
+    setId(generateNewPlaceId());
     setAddress(address);
     setContactNumber(contactNumber);
   }
 
   protected static String generateNewPlaceId() {
-    currentPlaceIdGenerator += 1;
-    return PLACE_ID_PREFIX + currentPlaceIdGenerator;
+    UUID uuid = UUID.randomUUID();
+    return PLACE_ID_PREFIX + uuid.toString();
   }
 
   public static void checkValidId(String id) {
@@ -33,7 +34,7 @@ public class InServicePlace {
   }
 
   public static InServicePlace createNewInServicePlace(InServicePlace place) {
-    return new InServicePlace(generateNewPlaceId(), place.getAddress(), place.getContactNumber());
+    return new InServicePlace(place.getId(), place.getAddress(), place.getContactNumber());
   }
 
   public String getId() {

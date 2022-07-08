@@ -19,6 +19,12 @@ public class SemesterResult {
     this.average = average;
   }
 
+  public SemesterResult(SemesterResult entity) {
+    setSemesterType(entity.getSemesterType());
+    setYear( entity.getYear());
+    setAverage(entity.getAverage());
+  }
+
   public SemesterType getSemesterType() {
     return semesterType;
   }

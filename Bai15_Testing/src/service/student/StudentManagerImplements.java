@@ -12,6 +12,7 @@ import exception.InvalidStudentTypeException;
 import exception.LackOfDepartmentTypeException;
 import exception.ResultNotFoundException;
 import exception.StudentNotFoundException;
+import java.sql.SQLException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,6 +102,7 @@ public class StudentManagerImplements implements StudentManagerInterface {
     }
     return averageScore;
   }
+
 
   @Override
   public int getTotalRegularStudentByDepartment(DepartmentType departmentType) {

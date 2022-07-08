@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DatabaseHelper {
 
-  private static final String CONNECTION_URL = "jdbc:sqlite:Bai15_Testing/database/student_management.db";
+  private static final String CONNECTION_URL = "jdbc:sqlite:C:\\Users\\hp\\Desktop\\Bai15_OOP_java\\Bai15_Testing\\database\\student_management.db";
 
   private static volatile DatabaseHelper instance = null;
 

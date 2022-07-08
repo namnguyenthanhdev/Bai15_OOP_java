@@ -12,7 +12,7 @@ public interface StudentManagerInterface {
 
   boolean isRegularStudent(String studentId);
 
-  BaseStudent addNewStudent(BaseStudent baseStudent) throws SQLException;
+  BaseStudent addNewStudent(BaseStudent baseStudent);
 
   float getAverageScoreOfStudentBySemester(String studentId, Year year, SemesterType semesterType);
 
